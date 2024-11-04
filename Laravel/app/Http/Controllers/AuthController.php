@@ -17,12 +17,12 @@ class AuthController extends Controller
     {
         $user = User::create($request->validate([
             'first_name' => 'required|string',
-            'last_name' => 'string',
+            'last_name' => 'required|tring',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]));
 
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
 
         return response()->json([
             'message' => 'User created successfully',
@@ -30,40 +30,40 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request)
-    {
-        $fields = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-            'remember' => 'boolean',
-        ]);
+//     public function login(Request $request)
+//     {
+//         $fields = $request->validate([
+//             'email' => 'required|email',
+//             'password' => 'required|string',
+//             'remember' => 'boolean',
+//         ]);
 
-        $credentials = [
-            'email' => $fields['email'],
-            'password' => $fields['password'],
-        ];
+//         $credentials = [
+//             'email' => $fields['email'],
+//             'password' => $fields['password'],
+//         ];
 
-        if (!Auth::attempt($credentials, $fields['remember'])) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided cretials are incorrect'],
-            ]);
+//         if (!Auth::attempt($credentials, $fields['remember'])) {
+//             throw ValidationException::withMessages([
+//                 'email' => ['The provided cretials are incorrect'],
+//             ]);
 
-            session()->regenerate();
+//             session()->regenerate();
 
 
-            return response()->json([
-                'message' => 'Succe3ssfully Logned in',
-                'user' => Auth::user(),
-            ]);
-        }
-    }
+//             return response()->json([
+//                 'message' => 'Succe3ssfully Logned in',
+//                 'user' => Auth::user(),
+//             ]);
+//         }
+//     }
 
- public function logout(){
-                Auth::guard('web')->logout();
-                return response()->json([
-                    'message' => 'User logged out successfully',
-                ]);
-            }
+//  public function logout(){
+//                 Auth::guard('web')->logout();
+//                 return response()->json([
+//                     'message' => 'User logged out successfully',
+//                 ]);
+//             }
 
 
     // public function emailVerify($user_id,Request $request)
