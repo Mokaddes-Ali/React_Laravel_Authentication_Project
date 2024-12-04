@@ -1,15 +1,19 @@
+import React from "react";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import Logout from "./components/Logout";
 
-
-function App() {
-
-
+const App = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-red-600">
-      Hello world!
-    </h1>
-    </>
-  )
-}
+    <div>
+      <Register />
+      <Login />
+      <Dashboard />
+      <Logout />
+    </div>
+  );
+};
 
-export default App
+export default App;
+
