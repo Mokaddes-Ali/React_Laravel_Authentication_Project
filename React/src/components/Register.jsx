@@ -1,36 +1,39 @@
+
 import React, { useState } from "react";
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios"; // Import axios for making API requests
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const Register = () => {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState(""); // State for last name
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(""); // State to store error message
+  const [success, setSuccess] = useState(""); // State to store success message
+  const [loading, setLoading] = useState(false); // State to manage loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setSuccess("");
+    setLoading(true); // Set loading to true while waiting for response
+    setError(""); // Clear any previous errors
+    setSuccess(""); // Clear any previous success messages
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/register", {
-        first_name,
-        last_name, // Include last name in the request
+        name,
         email,
         password,
       });
 
-      console.log("Response:", response.data);
+      console.log("Response:", response.data); // Log the response to check success
+
+      // Handle success response: display the success message and handle further actions
       setSuccess("Registration successful! Please log in.");
     } catch (err) {
-      setLoading(false);
+      setLoading(false); // Set loading to false when the request is done
       if (err.response) {
-        console.error("Error response:", err.response);
+        console.error("Error response:", err.response); // Log the full response
+
+        // Check if there are validation errors
         if (err.response.data.errors) {
           setError(err.response.data.errors.email || "Registration failed. Please try again.");
         } else {
@@ -51,28 +54,15 @@ const Register = () => {
               <h2 className="text-center mb-4">Register</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="first_name" className="form-label">
-                    First Name
+                  <label htmlFor="name" className="form-label">
+                    Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="first_name"
-                    value={first_name}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="last_name" className="form-label">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="last_name"
-                    value={last_name}
-                    onChange={(e) => setLastName(e.target.value)}
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                   />
                 </div>
@@ -107,6 +97,7 @@ const Register = () => {
                 </button>
               </form>
 
+              {/* Display error or success messages */}
               {error && <div className="alert alert-danger mt-3">{error}</div>}
               {success && <div className="alert alert-success mt-3">{success}</div>}
             </div>
