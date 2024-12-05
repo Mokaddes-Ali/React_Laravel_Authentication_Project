@@ -1,13 +1,9 @@
-import React from "react";
-import { logoutUser } from "../services/api";
+
 
 const Logout = () => {
-  const handleLogout = async () => {
-    const response = await logoutUser();
-    console.log(response);
-  };
+  return (
+    <div>Logout</div>
+  )
+}
 
-  return <button onClick={handleLogout}>Logout</button>;
-};
-
-export default Logout;
+export default Logout
